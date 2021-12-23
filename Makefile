@@ -1,4 +1,4 @@
-PREFIX ?= /usr/local
+PREFIX ?= /usr
 KEYRING_TARGET_DIR=$(DESTDIR)$(PREFIX)/share/pacman/keyrings/
 KEYRING_FILES=$(wildcard build/*.gpg) $(wildcard build/*-revoked) $(wildcard build/*-trusted)
 SOURCES := $(shell find keyring) $(shell find libkeyringctl -name '*.py' -or -type d) keyringctl
@@ -25,6 +25,9 @@ test:
 
 build: $(SOURCES)
 	./keyringctl -v build
+
+copy: build
+	cp build/* .
 
 clean:
 	rm -rf build
